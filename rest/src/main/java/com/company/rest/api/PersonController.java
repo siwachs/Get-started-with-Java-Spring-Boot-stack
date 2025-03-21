@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.rest.model.Person;
 import com.company.rest.service.PersonService;
 
+import jakarta.validation.Valid;
+
 @RequestMapping("api/v1/person")
 @RestController
 public class PersonController {
@@ -25,7 +27,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@RequestBody Person person) {
+    public void addPerson(@Valid @RequestBody Person person) {
         personService.addPerson(person);
     }
 
@@ -45,7 +47,7 @@ public class PersonController {
     }
 
     @PatchMapping(path = "{id}")
-    public int updatePersonById(@PathVariable("id") UUID id, @RequestBody Person newPerson) {
+    public int updatePersonById(@PathVariable("id") UUID id, @Valid @RequestBody Person newPerson) {
         return personService.updatePersonById(id, newPerson);
     }
 }

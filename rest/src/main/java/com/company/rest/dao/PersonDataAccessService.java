@@ -40,11 +40,12 @@ public class PersonDataAccessService implements PersonDao {
     }
 
     @Override
-    public int updatePersonById(UUID id, Person person) {
-        return selectPersonById(id).map(p -> {
-            int indexOfPersonToUpdate = db.indexOf(person);
-            if (indexOfPersonToUpdate >= 0) {
-                db.set(indexOfPersonToUpdate, person);
+    public int updatePersonById(UUID id, Person newPerson) {
+        return selectPersonById(id).map(existingPerson -> {
+            int personToUpdate = db.indexOf(existingPerson);
+            if (personToUpdate >= 0) {
+                db.set(personToUpdate, new Person(id, newPerson.getName()));
+
                 return 1;
             }
 
